@@ -1,0 +1,51 @@
+name: workbench
+mgmt:
+ network: gnmic-lab_gnmic-net
+topology:
+  kinds:
+    linux:
+      image: frrouting/frr:v7.5.1
+    ceos:
+      image: ceos:4.27.4.1M
+    crpd:
+      image: crpd:22.3R1.11
+    srl:
+      image: ghcr.io/nokia/srlinux:latest
+    keysight_ixia-c-one:
+      image: ghcr.io/open-traffic-generator/ixia-c-one:latest
+  nodes:
+    d1-ceos:
+      kind: ceos
+    d2-ceos:
+      kind: ceos
+    g1-srl:
+      kind: srl
+    g2-srl:
+      kind: srl
+    c1-frr:
+      kind: linux
+    gre1a-ceos:
+      kind: ceos
+    sbb1-srl:
+      kind: srl
+    sbb2-srl:
+      kind: srl
+    pb1-crpd:
+      kind: crpd
+    pb2-crpd:
+      kind: crpd
+
+  links:
+    - endpoints: ["g1-srl:e1-2" , "d1-ceos:eth2"]
+    - endpoints: ["g2-srl:e1-2" , "d2-ceos:eth2"]
+    - endpoints: ["g1-srl:e1-1" , "g2-srl:e1-1"]
+    - endpoints: ["d1-ceos:eth1" , "d2-ceos:eth1"]
+    - endpoints: ["sbb1-srl:e1-1" , "g1-srl:e1-3"]
+    - endpoints: ["sbb2-srl:e1-1" , "g2-srl:e1-3"]
+    - endpoints: ["d1-ceos:eth3" , "c1-frr:eth1" ]
+    - endpoints: ["d2-ceos:eth3" , "c1-frr:eth2" ]
+    - endpoints: ["d1-ceos:eth4" , "gre1a-ceos:eth1" ]
+    - endpoints: ["d2-ceos:eth4" , "gre1a-ceos:eth2" ]
+    - endpoints: ["sbb1-srl:e1-2" , "pb1-crpd:eth1"]
+    - endpoints: ["sbb2-srl:e1-2" , "pb2-crpd:eth1"]
+    - endpoints: ["sbb1-srl:e1-3" , "sbb2-srl:e1-3"]
