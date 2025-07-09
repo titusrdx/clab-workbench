@@ -6,9 +6,9 @@ topology:
     linux:
       image: frrouting/frr:v7.5.1
     ceos:
-      image: ceos:4.27.4.1M
+      image: speedx007/ceos:4.27.4.1M
     crpd:
-      image: crpd:22.3R1.11
+      image: speedx007/crpd:22.3R1.11
     srl:
       image: ghcr.io/nokia/srlinux:latest
     keysight_ixia-c-one:
